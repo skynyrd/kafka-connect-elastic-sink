@@ -1,7 +1,5 @@
 ## Kafka Connect Elastic Sink Connector
 
----
-
 Default Elastic sink connector and open source alternatives read data from Kafka topic, and index/delete them with
 respect to bootstrap configuration.
 

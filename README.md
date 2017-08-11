@@ -13,10 +13,9 @@ That is,
 "behaviour" flag name is configurable.
 
 ### About record
-Your record must be string and these fields should be included:
+Your record must be a JSON string and these fields should be included:
 * flag : Used to get behaviour, should be `insert` or `delete`, field name `flag` is configurable by `flag.field` property. (e.g. `Status` in example configuration below)
-* payload: To send Elastic, should contain Json data, field name `payload` is configurable by `data.array.field.name` property. (e.g. `Products` in example configuration below)
-* payload can be array or object.
+* payload: To send Elastic, should contain Json data, field name `payload` is configurable by `data.array.field.name` property. (e.g. `Products` in example configuration below). Payload can be array or object.
 
 #### Example Configuration
 ```

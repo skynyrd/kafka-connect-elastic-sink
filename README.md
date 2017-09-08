@@ -1,3 +1,7 @@
+In refactoring process, useless readme below. Will be available to clone on 15.09.2017
+
+--------------
+
 ## Kafka Connect Elastic Sink Connector
 
 Default Elastic sink connector and open source alternatives read data from Kafka topic, and index/delete them with

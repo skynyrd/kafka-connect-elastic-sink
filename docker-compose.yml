@@ -18,9 +18,10 @@ services:
       - elasticsearch
 
   elasticsearch:
-    image: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.4.3
     environment:
-      OPTS: -Dindex.number_of_shards=1 -Dindex.number_of_replicas=0
+      - "xpack.security.enabled=false" 
     ports:
-      - "9200:9200"
+      - 9200:9200
+      - 9300:9300
 

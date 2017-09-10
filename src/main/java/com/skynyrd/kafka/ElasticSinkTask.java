@@ -6,8 +6,8 @@ import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.kafka.connect.sink.SinkTask;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ElasticSinkTask extends SinkTask {
-    private static Logger log = LoggerFactory.getLogger(ElasticSinkTask.class);
+    private static Logger log = LogManager.getLogger(ElasticSinkTask.class);
     private ElasticService elasticService;
 
 

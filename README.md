@@ -18,27 +18,26 @@ That is,
 
 ### About record
 Your record must be a JSON string and these fields should be included:
-* flag : Used to get behaviour, should be `insert` or `delete`, field name `flag` is configurable by `flag.field` property. (e.g. `Status` in example configuration below)
-* payload: To send Elastic, should contain Json data, field name `payload` is configurable by `data.array.field.name` property. (e.g. `Products` in example configuration below). Payload can be array or object.
+* flag : Used to get behaviour, should be `insert` or `delete`, field name `flag` is configurable by `flag.field` property. (e.g. `status` in example configuration below)
+* payload: To send Elastic, should contain Json data, field name `payload` is configurable by `data.array` property. (e.g. `dataList` in example configuration below). Payload can be array or object.
 
 #### Example Configuration
 ```
-name=ElasticSinkConnector
-topics=product-raw-data
-connector.class=com.skynyrd.kafka.ElasticSinkConnector
-data.as.array=false
-max.retries=3
-name=ElasticSinkConnector
-topics=products-processed
-tasks.max=1
-type.name=deneme
 elastic.url=elasticsearch
-data.array.field.name=Products
-index.name=deneme
-flag.field=Status
-elastic.port=9200
+name=ElasticSinkConnector
+topics=source-topic
+tasks.max=1
+type.name=targettype
+connector.class=com.skynyrd.kafka.ElasticSinkConnector
+elastic.transport.port=9300
+elastic.cluster.name=elasticsearch
+index.name=targetindex
+flag.field=status
+data.array=dataList
+value.converter=org.apache.kafka.connect.json.JsonConverter
+key.converter.schemas.enable=false
+value.converter.schemas.enable=false
 key.converter=org.apache.kafka.connect.storage.StringConverter
-value.converter=org.apache.kafka.connect.storage.StringConverter
 ```
 
 

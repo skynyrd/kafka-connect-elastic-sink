@@ -30,10 +30,15 @@ public class ElasticClientImpl implements ElasticClient {
         Settings settings = Settings.builder()
                 .put("cluster.name", clusterName).build();
 
-        client = new PreBuiltTransportClient(settings)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(url), port));
+        client = new PreBuiltTransportClient(settings);
+        client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(url), port));
 
         gson = new GsonBuilder()
+                .registerTypeAdapter(Double.class, (JsonSerializer<Double>) (src, typeOfSrc, context) -> {
+                    if(src == src.longValue())
+                        return new JsonPrimitive(src.longValue());
+                    return new JsonPrimitive(src);
+                })
                 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
                 .create();

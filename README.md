@@ -1,7 +1,3 @@
-In refactoring process, useless readme below. Will be available to clone on 15.09.2017
-
---------------
-
 ## Kafka Connect Elastic Sink Connector
 
 Default Elastic sink connector and open source alternatives read data from Kafka topic, and index/delete them with
@@ -11,26 +7,27 @@ This custom connector created for reading this configuration from data itself.
 
 That is,
 
-* If data has "behaviour" field set to "insert", then connector sends index request.
-* If data has "behaviour" field set to "delete", then connector delete request.
+* If data has "status" field set to "insert", then connector sends index request.
+* If data has "status" field set to "delete", then connector delete request.
 
-"behaviour" flag name is configurable.
+"status" flag name is configurable.
 
 ### About record
 Your record must be a JSON string and these fields should be included:
 * flag : Used to get behaviour, should be `insert` or `delete`, field name `flag` is configurable by `flag.field` property. (e.g. `status` in example configuration below)
-* payload: To send Elastic, should contain Json data, field name `payload` is configurable by `data.array` property. (e.g. `dataList` in example configuration below). Payload can be array or object.
+* You can also change `insert` or `delete` values `Constants.java` file.
+* payload: To send Elastic, should contain Json data, field name `dataList` is configurable by `data.array` property. (e.g. `dataList` in example configuration below). Payload can be array or object.
+* Your data in `dataList` must include `id` field. You can change id field name from `Constants.java`
 
 #### Example Configuration
 ```
 elastic.url=elasticsearch
 name=ElasticSinkConnector
-topics=source-topic
+topics=first_topic
 tasks.max=1
 type.name=targettype
 connector.class=com.skynyrd.kafka.ElasticSinkConnector
-elastic.transport.port=9300
-elastic.cluster.name=elasticsearch
+elastic.port=9200
 index.name=targetindex
 flag.field=status
 data.array=dataList

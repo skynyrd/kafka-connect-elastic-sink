@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ElasticClient {
-    void bulkSend(List<Record> records, String index, String type);
+    void bulkSend(List<Record> records, String index, String type) throws IOException;
 
     void close() throws IOException;
 }

@@ -32,8 +32,14 @@ public class ElasticSinkTask extends SinkTask {
 
     @Override
     public void put(Collection<SinkRecord> collection) {
-        Collection<String> recordsAsString = collection.stream().map(r -> String.valueOf(r.value())).collect(Collectors.toList());
-        elasticService.process(recordsAsString);
+        try {
+            Collection<String> recordsAsString = collection.stream().map(r -> String.valueOf(r.value())).collect(Collectors.toList());
+            elasticService.process(recordsAsString);
+        }
+        catch (Exception e) {
+            log.error("Error while processing records");
+            log.error(e.toString());
+        }
     }
 
     @Override

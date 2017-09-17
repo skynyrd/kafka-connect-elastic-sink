@@ -35,7 +35,7 @@ public class ElasticServiceImpl implements ElasticService {
 
         if(elasticClient == null) {
             try {
-                elasticClient = new ElasticClientImpl(config.getElasticUrl(), config.getElasticPort(), config.getElasticClusterName());
+                elasticClient = new ElasticClientImpl(config.getElasticUrl(), config.getElasticPort());
             } catch (UnknownHostException e) {
                 log.error("The host is unknown, exception stacktrace: " + e.toString());
             }
@@ -45,30 +45,36 @@ public class ElasticServiceImpl implements ElasticService {
     }
 
     @Override
-    public void process(Collection<String> recordsAsString) {
+    public void process(Collection<String> recordsAsString){
         List<Record> recordList = new ArrayList<>();
 
-        recordsAsString.forEach(record -> {
+        recordsAsString.forEach(recordStr -> {
             try {
-                JsonObject recordAsJson = gson.fromJson(record, JsonObject.class);
+                JsonObject recordAsJson = gson.fromJson(recordStr, JsonObject.class);
                 String behavior = recordAsJson.get(statusFlag).getAsString();
                 JsonArray dataList = recordAsJson.getAsJsonArray(dataListArrayName);
 
                 if(dataList == null) {
-                    log.error("Missing data list in record, which is: " + record);
+                    log.error("Missing data list in record, which is: " + recordStr);
                 }
 
                 recordList.add(new Record(dataList, behavior));
             }
             catch (JsonSyntaxException e) {
-                log.error("Cannot deserialize json string, which is : " + record);
+                log.error("Cannot deserialize json string, which is : " + recordStr);
             }
             catch (Exception e) {
-                log.error("Cannot process data, which is : " + record);
+                log.error("Cannot process data, which is : " + recordStr);
             }
         });
 
-        elasticClient.bulkSend(recordList, indexName, typeName);
+        try {
+            elasticClient.bulkSend(recordList, indexName, typeName);
+        }
+        catch (Exception e) {
+            log.error("Something failed, here is the error:");
+            log.error(e.toString());
+        }
     }
 
     @Override

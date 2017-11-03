@@ -50,6 +50,9 @@ You should have Docker and Docker Compose to run and test it in your local.
 * Select `ElasticSinkConnector` in right bottom of the page. (Appears if volume is correctly set in compose file.)
 * For logs: `http://localhost:3030/logs/connect-distributed.log`
 
+Curious about how I implemented this repository?
+[Here is my medium post](https://hackernoon.com/writing-your-own-sink-connector-for-your-kafka-stack-fa7a7bc201ea)
+
 #### TODOs
 
 * Missing tests.
